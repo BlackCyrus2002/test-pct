@@ -18,19 +18,9 @@ if (isset($_POST['login'])) {
             if (password_verify($password_user, $hashed_password)) {
                 // Mot de passe correct, démarrage de la session
                 $_SESSION['user_id'] = $id;
-                $_SESSION['user_name'] = $nom;
-                $_SESSION['user_email'] = $email;
-                $_SESSION['phone_number'] = $phone_number;
-                $_SESSION['phone_wa'] = $phone_wa;
-                $_SESSION['path_photo'] = $path_photo;
 
                 // Définir des cookies pour se souvenir de l'utilisateur
-                setcookie("user_id", $id, time() + (86400 * 30), "/"); // 86400 = 1 jour
-                setcookie("user_name", $nom, time() + (86400 * 30), "/");
-                setcookie("user_email", $email, time() + (86400 * 30), "/");
-                setcookie("phone_number", $phone_number, time() + (86400 * 30), "/");
-                setcookie("phone_wa", $phone_wa, time() + (86400 * 30), "/");
-                setcookie("path_photo", $path_photo, time() + (86400 * 30), "/");
+                setcookie("user_id", $id, time() + (3600), "/"); // 3600 = 1 heure
 
                 // Rediriger l'utilisateur vers la page d'accueil ou tableau de bord
                 header("Location: Vue\Artisan\dashbord.php");

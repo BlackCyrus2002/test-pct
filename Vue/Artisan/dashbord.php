@@ -5,6 +5,21 @@ require_once('../../App/Config/database.php');
 require_once('../../App/Model/add_product.php');
 require_once('../../App/Model/see_product.php');
 require_once('../../App/Model/search_product.php');
+
+if (isset($_SESSION['user_id'])) {
+    $id = $_SESSION['user_id'];
+    $users = $con->prepare("SELECT id_artisan, nom,phone_number,phone_wa, email,path_photo FROM artisans WHERE id_artisan = ?");
+    $users->bind_param('i', $id);
+    $users->execute();
+    $result = $users->get_result();
+
+    if ($result->num_rows > 0) {
+        $only_user = $result->fetch_assoc();
+    } else {
+        echo "Utilisateur non trouvé.";
+        exit();
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -26,13 +41,13 @@ require_once('../../App/Model/search_product.php');
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" id="navId" role="tablist">
                 <li class="nav-item">
-                    <a href="#tab1Id" class="nav-link " data-bs-toggle="tab" aria-current="page">Profil</a>
+                    <a href="#tab1Id" class="nav-link active" data-bs-toggle="tab" aria-current="page">Profil</a>
                 </li>
                 <li class="nav-item">
                     <a href="#tab2Id" class="nav-link" data-bs-toggle="tab" aria-current="page">Produits</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#tab3Id" class="nav-link active" data-bs-toggle="tab" aria-current="page">Mes produits</a>
+                    <a href="#tab3Id" class="nav-link " data-bs-toggle="tab" aria-current="page">Mes produits</a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <a href="../../App/Model/logout.php" class="nav-link">
@@ -44,21 +59,19 @@ require_once('../../App/Model/search_product.php');
 
             <!-- Tab panes -->
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade " id="tab1Id" role="tabpanel">
+                <div class="tab-pane fade show active" id="tab1Id" role="tabpanel">
                     <div class="container"><br>
                         <center>
-                            <img src="../../<?php echo $_SESSION['path_photo']; ?>" alt=""
+                            <img src="<?php echo $only_user['path_photo']; ?>" alt=""
                                 style="height: 200px;width:200px;border-radius:50%;box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.219)">
 
                             <h2 style="font-family: 'Times New Roman', Times, serif;font-weight:bold;margin-top:10px">
 
-                                <?php echo $_SESSION['user_name']; ?>
-                                <?php
-                                echo $_SESSION['user_id'];
-                                ?>
+                                <?php echo $only_user['nom']; ?>
+                                <?php echo $only_user['id_artisan']; ?>
                             </h2><br>
                             <div style="display: flex;justify-content:center">
-                                <a href="https://Wa.me/+225<?php echo $_SESSION['phone_wa']; ?>"
+                                <a href="https://Wa.me/+225<?php echo $only_user['phone_wa']; ?>"
                                     style="display:block;width:50px;height:50px;color:green" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                         class="bi bi-whatsapp" viewBox="0 0 16 16">
@@ -67,7 +80,7 @@ require_once('../../App/Model/search_product.php');
                                     </svg>
 
                                 </a>
-                                <a href="tel:+225<?php echo $_SESSION['phone_number']; ?>"
+                                <a href="tel:+225<?php echo $only_user['phone_number']; ?>"
                                     style="display:block;width:50px;height:50px;color:black" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                         class="bi bi-telephone" viewBox="0 0 16 16">
@@ -76,14 +89,16 @@ require_once('../../App/Model/search_product.php');
                                     </svg>
 
                                 </a>
-                            </div>
+                            </div><br>
+                            <a href="edit_profil.php?id=<?php echo $only_user['id_artisan']; ?>"
+                                class="btn btn-primary">Modifier mes informations</a>
                         </center>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tab2Id" role="tabpanel"><br>
                     <?php require_once('dashbord_prod.php'); ?>
                 </div>
-                <div class="tab-pane fade show active" id="tab3Id" role="tabpanel">
+                <div class="tab-pane fade" id="tab3Id" role="tabpanel">
                     <br>
                     <?php require_once('dashbord_all_product.php'); ?>
                 </div>
