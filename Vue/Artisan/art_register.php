@@ -74,5 +74,6 @@
                 <?php echo isset($photo_error) ? $photo_error : ''; ?>
             </span>
         </form>
+
     </div>
 </div>

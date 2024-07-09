@@ -44,6 +44,20 @@ require_once('App/Model/see_user.php');
                     <?php
                     require_once('Vue/Artisan/art_register.php');
                     ?>
+                    <div>
+                        <center>
+                            <hr style="width:50%">
+                            <a href="">
+                                <img src="Public/images/google.png" alt="logo"
+                                    style="height: 30px;width:30px;margin-bottom:50px;margin-right:10px">
+                            </a>
+                            <a href="">
+                                <img src="Public/images/facebook.png" alt="logo"
+                                    style="height: 30px;width:30px;margin-bottom:50px;">
+                            </a>
+                        </center>
+                    </div>
+
                 </div>
                 <div class="tab-pane fade" id="tab2Id" role="tabpanel">
                     <?php

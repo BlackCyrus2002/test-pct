@@ -12,32 +12,32 @@
         </thead>
         <tbody>
             <?php while ($fil = mysqli_fetch_array($user)) { ?>
-            <tr class="">
-                <td scope="row">
-                    <?php
+                <tr class="">
+                    <td scope="row">
+                        <?php
                         echo $fil['id_artisan'];
                         ?>
-                </td>
-                <td>
-                    <?php
+                    </td>
+                    <td>
+                        <?php
                         echo $fil['nom'];
                         ?>
-                </td>
-                <td>
-                    <?php
+                    </td>
+                    <td>
+                        <?php
                         echo $fil['email'];
                         ?>
-                </td>
-                <td>
-                    <a href="Vue/Artisan/see_artisan.php?id=<?php echo $fil['id_artisan']; ?>" class="btn btn-primary">
-                        Voir
-                    </a>
-                    <a href="App/Model/del_artisan.php?id=
+                    </td>
+                    <td>
+                        <a href="Vue/Artisan/see_artisan.php?id=<?php echo $fil['id_artisan']; ?>" class="btn btn-primary">
+                            Voir
+                        </a>
+                        <a href="App/Model/del_artisan.php?id=
                     <?php echo
                     $fil['id_artisan'];
                     ?>" class="btn btn-danger">Supprimer</a>
-                </td>
-            </tr>
+                    </td>
+                </tr>
             <?php } ?>
         </tbody>
     </table>
